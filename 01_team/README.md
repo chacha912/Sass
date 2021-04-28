@@ -608,21 +608,6 @@ sass에는 다양한 내장함수를 제공하여 스타일규칙을 만드는�
 #### 2.11.1 색상 관련 내장함수
 
 - `mix(\$color1, \$color2)` : 두 개의 색을 섞습니다.
-
-  ```scss
-  $new-color: mix(rgb(245, 0, 0), rgb(0, 0, 245));
-  //빨강과 파랑을 인수로 지정
-
-  div {
-    background: $new-color;
-  }
-  // 결과
-
-  div {
-    background: #7b007b; // 보라색
-  }
-  ```
-
 - `lighten(\$color, \$amount)` : 백분률을 지정하여 밝게 합니다.
 - `darken(\$color, \$amount)` : 백분률을 지정하여 어둡게 합니다.
 - `saturate(\$color, \$amount)` : 백분률을 지정하여 채도를 높입니다.
