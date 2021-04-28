@@ -1,3 +1,586 @@
+# SASS
+
+## 1. SASS 개요
+
+### 1.1 CSS 전처리기(Preprocessor)
+
+- CSS 전처리기 는 별도의 컴파일과정을 통해 **CSS의 기능을 확장하고, 반복적인 작업을 자동화할 수 있게 도와 주는 툴** 입니다. CSS 만을 이용하면 코드 작성과 유지보수에 불편함이 있는데 CSS 전처리기(Sass, Less, Stylus 등)를 통해 선택자의 중첩, 다양한 단위의 연산, 조건문 등 많은 기능을 사용하여 보다 편하게 코드를 작성할 수 있습니다. 웹에서는 CSS 코드만 동작하기 때문에 CSS 전처리기로 작성한 코드를 컴파일하여 사용할 수 있습니다.  
+  <img alt="css 전처리기" src="./img/preprocessor.JPG" width="500">
+- CSS 전처리기의 종류는 다음과 같습니다.
+  종류 | 홈페이지
+  :---:|:---:|
+  **Less** <br>(Leaner Style Sheets)|[📄](https://lesscss.org/)
+  **Sass** <br>(Syntactically Awesome Style Sheets) |[📄](https://sass-lang.com/)
+  **Stylus**|[📄](https://stylus-lang.com/)
+  **PostCSS**|[📄](https://postcss.org/)
+
+  [Compare CSS PREprocessors](https://csspre.com/compare/)에서 각 특징을 비교해볼 수 있습니다.
+  ![css전처리기 비교](./img/compare.JPG)
+
+### 1.2 SASS 의 장점
+
+- CSS 호환성이 좋습니다. 기존에 작성된 CSS 파일을 확장자만 scss 로 변경해도 정상적으로 컴파일이 수행됩니다.
+- 풍부한 기능을 제공합니다.
+- 오랜 기간동안 운영/개발 되어졌기 때문에 완성도가 있습니다.
+- gulp, 웹팩같은 태스크러너에서 다른 플러그인과 조합했을 때 활용성이 좋습니다.
+- 많은 기업이 Sass를 도입해 코드를 작성하고 있습니다.
+
+### 1.3 Sass vs SCSS 문법
+
+- 기존 CSS 문법을 그대로 활용할 수 있는 SCSS 문법이 Sass 3버전에 추가되었습니다. CSS 문법과 유사하여 호환성이 높아졌습니다.
+
+- Sass 문법과의 차이점은 `{}`(중괄호)와 `;`(세미콜론)의 유무입니다. Sass는 선택자의 유효범위를 `‘들여쓰기’`로 구분하고, SCSS는 `{}`로 범위를 구분합니다.
+
+  ```css
+  /* scss 문법 */
+  ul {
+    li {
+      display: block;
+    }
+  }
+  ```
+
+  ```css
+  /* sass 문법 */
+  ul
+    li
+        display: block
+  ```
+
+  ```css
+  /* compiled CSS */
+  ul li {
+    display: block;
+  }
+  ```
+
+- Mixins 기능에서도 sass, scss 문법의 차이가 있습니다. Sass는 `=`와 `+`기호로 Mixins 기능을 사용하고, SCSS는 `@mixin`과 `@include`로 기능을 사용합니다.
+
+  ```css
+  /* scss 문법 */
+  @mixin border-radius($radius) {
+    -webkit-border-radius: $radius;
+    -moz-border-radius: $radius;
+    -ms-border-radius: $radius;
+    border-radius: $radius;
+  }
+
+  .box {
+    @include border-radius(10px);
+  }
+  ```
+
+  ```css
+  /* sass 문법 */
+  =border-radius($radius)
+    -webkit-border-radius: $radius
+    -moz-border-radius:    $radius
+    -ms-border-radius:     $radius
+    border-radius:         $radius
+
+  .box
+    +border-radius(10px)
+  ```
+
+  ```css
+  /* compiled CSS */
+  .box {
+    -webkit-border-radius: 10px;
+    -moz-border-radius: 10px;
+    -ms-border-radius: 10px;
+    border-radius: 10px;
+  }
+  ```
+
+### 1.4 컴파일 방법
+
+- SassMeister
+  간단한 Sass 코드는 컴파일러 설치 없이 [SassMeister 페이지](https://www.sassmeister.com/)에서 바로 CSS 로 변환해 볼 수 있습니다. Sass 컴파일러 버전과 작성문법을 선택하여 비교할 수도 있습니다.
+  아래 예시는 SCSS 문법, dart-sass v1.26.11 컴파일러를 선택해 작성한 것으로 왼쪽에 Sass 코드를 적으면 오른쪽에서 변환된 CSS를 확인할 수 있습니다.
+  ![sassmeister 예제](./img/sassmeister.JPG)
+
+- Sass 설치 (npm 이용)
+  node, npm이 설치된 환경에서는 Sass를 설치하여 사용할 수 있습니다.
+
+  - Sass 설치
+    `$ (sudo) npm install -g sass`
+  - 설치(버전) 확인
+    `$ sass --versioin`
+  - Sass 컴파일
+    ```bash
+    $ sass input.scss output.css
+    # 혹은
+    $ sass input.scss:output.css
+    ```
+  - Sass 컴파일할 때 --watch 옵션을 추가하면 수정될 때마다 자동으로 컴파일됩니다.
+    `$ sass --watch input.scss:output.css`
+  - 컴파일된 CSS파일의 formatting style 지정 (expanded는 풀어쓴 형태, compressed는 minify된 형태)
+    `--style [expanded, compressed]`
+
+- Parcel 설치
+  웹 애플리케이션 번들러 Parcel 을 통해서도 Sass 컴파일은 쉽게 할 수 있습니다.
+
+  - Parcel 설치
+    `$ npm install -g parcel-bundler`
+  - 프로젝트에 package.json 생성
+    `$ npm init -y`
+  - 프로젝트에 Sass 컴파일러(node-sass) 설치
+
+    ```bash
+    $ npm install --save-dev node-sass
+    # 혹은
+    $ npm i -D node-sass
+    ```
+
+  - HTML 파일에 <link>로 Sass 파일 연결
+    `<link rel="stylesheet" href="scss/main.scss">`
+  - Parcel 실행
+    dist/에서 컴파일된 Sass 파일을 볼 수 있고, 별도의 포트 번호를 설정하지 않았다면 http://localhost:1234에 접속하여 적용상태를 확인할 수 있습니다. Sass 파일 변경시 변경사항을 실시간으로 확인 가능합니다.
+
+    ```bash
+    $ npx parcel index.html
+    # 혹은
+    $ parcel build index.html
+    ```
+
+    ![parcel 예시](./img/parcel-sass2.JPG)
+
+- 이외에도 node-sass, Gulp, Webpack을 이용해 컴파일 할 수 있습니다.
+
+## 2. SASS 문법
+
+### 2.1 주석
+
+- CSS 주석은 `/* */`을 사용합니다. 이 형식을 사용하면 Sass 파일을 컴파일한 CSS 파일에서도 주석이 남아있게 됩니다.
+- Sass에서는 `// 주석내용` 을 사용하여 주석을 작성할 수 있는데 이렇게 작성할 경우 컴파일한 CSS 파일에서는 보이지 않습니다. 즉, CSS로 컴파일되지 않아도 되는 내용의 주석을 작성할 경우에는 `//`을 사용합니다.
+- 여러 줄 주석을 사용할 경우 기존의 sass 문법에서는 각 줄 앞에 `*`을 붙여야 하고, 줄바꿈 되는 주석의 `*`위치가 같아야 합니다. scss 문법은 각 줄에 `*`이 없어도 가능하며 CSS와 호환이 쉽습니다.
+
+  ```css
+  /* sass 문법 */
+
+  /* 컴파일되는
+   * 여러 줄
+   * 주석 */
+  ```
+
+  ```css
+  /* sass 문법 */
+  /* 주석의 라인이 다를 경우 에러가 발생합니다 */
+
+  /* 컴파일되는
+  * 여러 줄
+      * 주석 */
+  ```
+
+  ```css
+  /* scss 문법 */
+
+  /*
+  컴파일되는
+  여러 줄
+  주석
+  */
+  ```
+
+### 2.2 데이터 종류
+
+| 데이터   | 설명                            | 특이사항                                                               | 예시                                      |
+| :------- | :------------------------------ | :--------------------------------------------------------------------- | :---------------------------------------- |
+| Numbers  | 숫자                            | 단위도 포함됩니다                                                      | 1, .82, 20px, 2em                         |
+| Strings  | 문자                            | 따옴표가 없어도 가능합니다                                             | bold, relative, "/images/a.png", "dotum"  |
+| Colors   | 색상 표현                       | red 와 같이 색상을 나타내는 키워드 문자열은 Colors 데이터에 해당합니다 | red, blue, #FFFF00, rgba(255,0,0,.5)      |
+| Booleans | 논리                            | &nbsp;                                                                 | true, false                               |
+| Nulls    | 아무것도 없음                   | 속성값으로 null을 사용하면 컴파일되지 않습니다                         | null                                      |
+| Lists    | 공백이나 `,`로 구분된 값의 목록 | `()`를 붙이거나 안붙여도 가능합니다                                    | `(apple, orange, banana)`, `apple orange` |
+| Maps     | Key: Value 형태의 값            | `()`를 꼭 붙여야 합니다                                                | (apple: a, orange: o, banana: b)          |
+
+### 2.3 중첩
+
+- 자식 선택자를 부모 선택자 블록 안에 중첩하여 쓸 수 있습니다. 부모 선택자를 반복해서 쓰지 않아도 되고, 가독성이 더 뛰어나며 구조화된 느낌의 코드를 작성할 수 있습니다. 중첩을 너무 남발하게 되면 들여쓰기 뎁스가 깊어지면서 오히려 가독성이 떨이질 수 있고, 컴파일된 CSS에도 불필요한 셀렉터가 포함될 수 있으므로 가급적 3뎁스 이내의 중첩으로 작성하는 것을 추천합니다.
+
+  ```css
+  /* scss 문법 */
+
+  .section {
+    background: white;
+
+    .title {
+      color: green;
+    }
+    .description {
+      text-align: center;
+    }
+    .description_list {
+      margin: 20px 0;
+      padding: 20px;
+      border: 1px solid gray;
+      dd {
+        font-size: 15px;
+        line-height: 20px;
+      }
+    }
+  }
+  ```
+
+  ```css
+  /* compiled CSS */
+
+  .section {
+    background: white;
+  }
+  .section .title {
+    color: green;
+  }
+  .section .description {
+    text-align: center;
+  }
+  .section .description_list {
+    margin: 20px 0;
+    padding: 20px;
+    border: 1px solid gray;
+  }
+  .section .description_list dd {
+    font-size: 15px;
+    line-height: 20px;
+  }
+  ```
+
+- 중첩 안에서 `&`를 이용하여 상위(부모) 선택자를 참조할 수 있습니다. 클래스를 이용한 일치 선택자, 가상클래스, 가상요소 선택자를 사용할 때 편리합니다.
+
+  ```css
+  /* scss 문법 */
+
+  a {
+    font-weight: bold;
+    text-decoration: none;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+  ```
+
+  ```css
+  /* compiled CSS */
+
+  a {
+    font-weight: bold;
+    text-decoration: none;
+  }
+  a:hover {
+    text-decoration: underline;
+  }
+  ```
+
+  - 단순 부모 셀렉터명만 가져오는 것이 아니고 네스팅된 모든 셀렉터를 가져옴을 주의해야 합니다.
+
+    ```css
+    /* scss 문법 */
+
+    .espresso {
+      color: red;
+
+      .cappuccino {
+        color: orange;
+
+        .latte {
+          .a_class {
+            .b_class {
+              &.last {
+                // 깊은 중첩에서의 부모 참조 선택자
+                color: yellow;
+              }
+            }
+          }
+        }
+      }
+    }
+    ```
+
+    ```css
+    /* compiled CSS */
+
+    .espresso {
+      color: red;
+    }
+    .espresso .cappuccino {
+      color: orange;
+    }
+    .espresso .cappuccino .latte .a_class .b_class.last {
+      color: yellow;
+    }
+    ```
+
+  - `&`의 위치에 따라 다양하게 사용할 수 있습니다.
+
+    ```css
+    /* scss 문법 */
+
+    // 접미사로 사용한 예시
+    .latte {
+      .cappuccino & {
+        font-size: 11px;
+      }
+    }
+
+    // 접두사로 사용한 예시, BEM 지원
+    .give_me_a {
+      &-espresso {
+        color: red;
+      }
+      .please &-americano {
+        color: orange;
+      }
+    }
+    ```
+
+    ```css
+    /* compiled CSS */
+
+    .cappuccino .latte {
+      font-size: 11px;
+    }
+
+    .give_me_a-espresso {
+      color: red;
+    }
+    .please .give_me_a-americano {
+      color: orange;
+    }
+    ```
+
+- `@at-root` 를 사용해 중첩에서 벗어날 수 있습니다. 중첩안에서 생성하고 중첩 밖에서 사용할 때 유용합니다. 아래 예시는 특정 변수를 범위 밖에서 사용할 수 없기 때문에, `@at-root`를 이용해 범위 안에서 생성하고 중첩 밖에서 사용하는 것을 보여줍니다.
+
+  ```css
+  /* scss 문법 */
+
+  .list {
+    $w: 100px;
+    $h: 50px;
+    li {
+      width: $w;
+      height: $h;
+    }
+    @at-root .box {
+      width: $w;
+      height: $h;
+    }
+  }
+  ```
+
+  ```css
+  /* compiled CSS */
+
+  .list li {
+    width: 100px;
+    height: 50px;
+  }
+  .box {
+    width: 100px;
+    height: 50px;
+  }
+  ```
+
+- 동일한 네임 스페이스(font-, margin- 등)을 가지는 속성도 중첩하여 사용할 수 있습니다.
+
+  ```css
+  /* scss 문법 */
+
+  .box {
+    font: {
+      weight: bold;
+      size: 10px;
+      family: sans-serif;
+    }
+    margin: {
+      top: 10px;
+      left: 20px;
+    }
+    padding: {
+      bottom: 40px;
+      right: 30px;
+    }
+  }
+  ```
+
+  ```css
+  /* compiled CSS */
+
+  .box {
+    font-weight: bold;
+    font-size: 10px;
+    font-family: sans-serif;
+    margin-top: 10px;
+    margin-left: 20px;
+    padding-bottom: 40px;
+    padding-right: 30px;
+  }
+  ```
+
+### 2.4 변수
+
+- 반복적으로 사용되는 값을 `$변수이름: 속성값;` 으로 지정할 수 있습니다.
+
+  ```css
+  /* scss 문법 */
+  $color-normal: #666;
+  $color-point: #f00;
+
+  a {
+    color: $color-normal;
+
+    &:hover {
+      color: $color-point;
+    }
+  }
+  ```
+
+  ```css
+  /* compiled CSS */
+
+  a {
+    color: #666;
+  }
+  a:hover {
+    color: #f00;
+  }
+  ```
+
+- 최상위에 선언시 전역변수로, 블록(`{}`) 안에 선언시 해당 블록안에서만 유효한 지역변수로 동작합니다.
+
+  ```css
+  /* scss 문법 */
+
+  .box1 {
+    $color: #111;
+    background: $color;
+  }
+
+  // Error
+  .box2 {
+    background: $color;
+  }
+  ```
+
+- 변수에 특정한 값 뿐만 아니라 다른 변수를 할당하여 값을 정의할 수도 있습니다. 이를 변수 재할당이라고 합니다.
+
+  ```css
+  /* scss 문법 */
+  $red: #ff0000;
+  $blue: #0000ff;
+
+  $color-primary: $blue;
+  $color-danger: $red;
+
+  .box {
+    color: $color-primary;
+    background: $color-danger;
+  }
+  ```
+
+  ```css
+  /* compiled CSS */
+  .box {
+    color: #0000ff;
+    background: #ff0000;
+  }
+  ```
+
+- 변수는 선언한 블록 내에서만 사용할 수 있는데 `!global`을 사용하면 변수의 유효범위를 전역(Global)으로 설정할 수 있습니다. 기존에 선언된 변수명을 블록 내에서 전역으로 설정하면 값이 덮어쓰기 되므로 주의합니다. 즉, 변수가 적용된 곳을 기준으로 가장 가까운 곳에서 선언된 값이 지정됩니다.
+
+  ```css
+  /* scss 문법 */
+
+  .box1 {
+    $color: #111 !global;
+    background: $color;
+  }
+  .box2 {
+    background: $color;
+  }
+  ```
+
+  ```css
+  /* compiled CSS */
+
+  .box1 {
+    background: #111;
+  }
+  .box2 {
+    background: #111;
+  }
+  ```
+
+- 변수에 값을 설정하는데 기존에 설정한 값이 있다면 기존 값을 사용하겠다는 의미로 `!default` 를 쓸 수 있습니다. 사용자의 코드를 라이브러리가 덮어쓰기 하면 안 되기 때문에 라이브러리 내에서 사용하는 변수에서 사용합니다.
+
+  ```css
+  /* scss 문법 */
+
+  $color-primary: red;
+
+  .box {
+    $color-primary: blue !default;
+    background: $color-primary;
+  }
+  ```
+
+  ```css
+  /* compiled CSS */
+  .box {
+    background: red;
+  }
+  ```
+
+- `#{}`interpolation을 통해 셀렉터명이나 속성명, 문자열 안에서도 변수를 사용할 수 있습니다.
+
+  ```css
+  /* scss 문법 */
+
+  $family: unquote("Droid+Sans");
+  $name: foo;
+  $attr: border;
+
+  @import url("http://fonts.googleapis.com/css?family=#{$family}");
+
+  p.#{$name} {
+    #{$attr}-color: blue;
+  }
+  ```
+
+  ```css
+  /* compiled CSS */
+
+  @import url("http://fonts.googleapis.com/css?family=Droid+Sans");
+
+  p.foo {
+    border-color: blue;
+  }
+  ```
+
+### 2.5 import (파일 가져오기)
+
+- `@import "file_name.css"` 로 외부의 Sass 파일을 가져와 사용할 수 있습니다. 즉, 가져온 파일에 정의된 모든 변수 또는 Mixins 등을 주 파일에서 사용할 수 있습니다. Sass에서 @import 사용할 때에는 url함수를 사용하지 않습니다.
+
+- 하나의 @import 로 여러 파일을 가져올 수 있습니다. 파일 이름은 `,`로 구분합니다. 아래는 ./ 주소가 생략된 것으로 현재 폴더에서 header.scss , footer.scss 파일을 찾아 가져오는 예시입니다.
+  `@import "header", "footer";`
+
+- 파일 분할(Partials)
+  Sass는 파일 이름 앞에 `_`를 붙이면 컴파일 시에 CSS파일로 컴파일 하지 않는 Partials 기능을 지원합니다. 즉, scss파일을 모듈 또는 레이아웃 기준으로 분리하여 css 구조화를 할 수 있습니다. Webpack이나 Parcel, Gulp 같은 일반적인 빌드툴에서는 Partials 기능을 사용할 필요 없이 설정된 값에 따라 빌드되지만 명시적으로 `_`를 사용할 것을 권장합니다.
+  ![파일분할 예시](https://cphinf.pstatic.net/mooc/20181227_7/15459044847404sNeV_PNG/sass_compile_to_css.png)
+  아래 예시의 1번은 파일명에 `_`를 붙이지 않고 모든 파일이 css로 변환된 경우이고, 2번은 `_`를 붙여 main.scss 파일만 css파일로 변환된 경우를 보여주고 있습니다.
+  ![파일분할 예시](./img/import.JPG)
+
+- Sass @import는 기본적으로 Sass 파일을 가져오는데, CSS @import 규칙으로 컴파일되는 몇 가지 상황이 있습니다.
+
+  - 파일 확장자가 `.css`일 때
+    `@import "hello.css";`
+  - 파일 이름이 `http://`로 시작하는 경우
+    `@import "http://hello.com/hello";`
+  - `url()`이 붙었을 경우
+    `@import url(hello);`
+  - 미디어쿼리가 있는 경우
+    `@import "hello" screen;`
+
 ### 2.6 연산 (Operations)
 
 Sass는 기본적인 연산 기능을 제공하는데, 해당 연산을 사용하여 레이아웃 작업 시 상황에 맞게 크기를 계산하거나 정해진 값을 나눠서 작성할 수 있어 유용합니다. Sass에서 사용할 수 있는 연산자의 종류로는 산술, 비교, 논리 연산자가 존재합니다.
@@ -86,9 +669,9 @@ Sass는 기본적인 연산 기능을 제공하는데, 해당 연산을 사용�
   ```scss
   div::after {
     /* 왼쪽 피연산자가 따옴표로 묶여있을시 연산 결과도 따옴표로 묶여있습니다. */
-    content: 'Hello ' + World; // "Hello World"
+    content: "Hello " + World; // "Hello World"
     /* 왼쪽 피연산자가 따옴표로 묶여있지 않을시 연산 결과도 묶여있지 않습니다.*/
-    flex-flow: row + '-reverse' + ' ' + wrap; // row-reverse wrap
+    flex-flow: row + "-reverse" + " " + wrap; // row-reverse wrap
   }
   ```
 
@@ -158,11 +741,11 @@ Sass는 기본적인 연산 기능을 제공하는데, 해당 연산을 사용�
     ```scss
     @mixin deco-text {
       &::after {
-        content: '!!';
+        content: "!!";
       }
 
       span.icon {
-        background-image: url('/image/smail-icon.png');
+        background-image: url("/image/smail-icon.png");
       }
     }
     ```
@@ -524,7 +1107,10 @@ $fruits: (apple, orange, banana, mango); // List 할당
 .fruits {
   @each $fruit in $fruits {
     //fruits List안에 있는 요소들을 fruit변수에 할당하여 순회
-    $i: index($fruits, $fruit); //index 함수를 사용해서 fruits안의 $fruit요소의 인덱스를 할당
+    $i: index(
+      $fruits,
+      $fruit
+    ); //index 함수를 사용해서 fruits안의 $fruit요소의 인덱스를 할당
     li:nth-child(#{$i}) {
       left: 50px * $i;
     }
@@ -542,13 +1128,13 @@ $fruits: (apple, orange, banana, mango); // List 할당
   left: 50px;
 }
 .fruits li:nth-child(1)::after {
-  content: 'fruit';
+  content: "fruit";
 }
 .fruits li:nth-child(2) {
   left: 100px;
 }
 .fruits li:nth-child(2)::after {
-  content: 'fruit';
+  content: "fruit";
 }
 
 //... 생략 ...
@@ -566,7 +1152,7 @@ $fruits-data: (
 @each $fruit, $country in $fruits-data {
   // fruits-data Map의 Key를 $fruit에 Value를 $country에 할당하여 순회
   .box-#{$fruit} {
-    background: url('/images/#{$country}.png');
+    background: url("/images/#{$country}.png");
   }
 }
 ```
@@ -680,7 +1266,9 @@ sass에는 다양한 내장함수를 제공하여 스타일규칙을 만드는�
 
 ## 참고 자료
 
-- [Sass guidelines](https://sass-guidelin.es/ko/)
+- [Sass](https://sass-lang.com/)
 - [Sass documntation](https://sass-lang.com/documentation)
+- [Sass guidelines](https://sass-guidelin.es/ko/)
 - [Heropy](https://heropy.blog/2018/01/31/sass/)
+- [Naver boostcourse](https://www.boostcourse.org/web344/lecture/36667/?isDesc=false)
 - [Poiemaweb](https://poiemaweb.com/sass-css-extention)
