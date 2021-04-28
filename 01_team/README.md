@@ -102,9 +102,9 @@
 - Sass 설치 (npm 이용)
   node, npm이 설치된 환경에서는 Sass를 설치하여 사용할 수 있습니다.
 
-  - Sass 설치
+  - Sass 설치  
     `$ (sudo) npm install -g sass`
-  - 설치(버전) 확인
+  - 설치(버전) 확인  
     `$ sass --versioin`
   - Sass 컴파일
     ```bash
@@ -112,17 +112,17 @@
     # 혹은
     $ sass input.scss:output.css
     ```
-  - Sass 컴파일할 때 --watch 옵션을 추가하면 수정될 때마다 자동으로 컴파일됩니다.
+  - Sass 컴파일할 때 --watch 옵션을 추가하면 수정될 때마다 자동으로 컴파일됩니다.  
     `$ sass --watch input.scss:output.css`
-  - 컴파일된 CSS파일의 formatting style 지정 (expanded는 풀어쓴 형태, compressed는 minify된 형태)
+  - 컴파일된 CSS파일의 formatting style 지정 (expanded는 풀어쓴 형태, compressed는 minify된 형태)  
     `--style [expanded, compressed]`
 
 - Parcel 설치
   웹 애플리케이션 번들러 Parcel 을 통해서도 Sass 컴파일은 쉽게 할 수 있습니다.
 
-  - Parcel 설치
+  - Parcel 설치  
     `$ npm install -g parcel-bundler`
-  - 프로젝트에 package.json 생성
+  - 프로젝트에 package.json 생성  
     `$ npm init -y`
   - 프로젝트에 Sass 컴파일러(node-sass) 설치
 
@@ -132,9 +132,9 @@
     $ npm i -D node-sass
     ```
 
-  - HTML 파일에 <link>로 Sass 파일 연결
+  - HTML 파일에 <link>로 Sass 파일 연결  
     `<link rel="stylesheet" href="scss/main.scss">`
-  - Parcel 실행
+  - Parcel 실행  
     dist/에서 컴파일된 Sass 파일을 볼 수 있고, 별도의 포트 번호를 설정하지 않았다면 http://localhost:1234에 접속하여 적용상태를 확인할 수 있습니다. Sass 파일 변경시 변경사항을 실시간으로 확인 가능합니다.
 
     ```bash
@@ -566,7 +566,7 @@
 
 - 파일 분할(Partials)
   Sass는 파일 이름 앞에 `_`를 붙이면 컴파일 시에 CSS파일로 컴파일 하지 않는 Partials 기능을 지원합니다. 즉, scss파일을 모듈 또는 레이아웃 기준으로 분리하여 css 구조화를 할 수 있습니다. Webpack이나 Parcel, Gulp 같은 일반적인 빌드툴에서는 Partials 기능을 사용할 필요 없이 설정된 값에 따라 빌드되지만 명시적으로 `_`를 사용할 것을 권장합니다.
-  ![파일분할 예시](https://cphinf.pstatic.net/mooc/20181227_7/15459044847404sNeV_PNG/sass_compile_to_css.png)
+  ![파일분할 예시](./img/import2.png)
   아래 예시의 1번은 파일명에 `_`를 붙이지 않고 모든 파일이 css로 변환된 경우이고, 2번은 `_`를 붙여 main.scss 파일만 css파일로 변환된 경우를 보여주고 있습니다.
   ![파일분할 예시](./img/import.JPG)
 
@@ -1267,7 +1267,7 @@ sass에는 다양한 내장함수를 제공하여 스타일규칙을 만드는�
 ## 참고 자료
 
 - [Sass](https://sass-lang.com/)
-- [Sass documntation](https://sass-lang.com/documentation)
+- [Sass documentation](https://sass-lang.com/documentation)
 - [Sass guidelines](https://sass-guidelin.es/ko/)
 - [Heropy](https://heropy.blog/2018/01/31/sass/)
 - [Naver boostcourse](https://www.boostcourse.org/web344/lecture/36667/?isDesc=false)
