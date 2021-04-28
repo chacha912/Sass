@@ -312,6 +312,6 @@ Sass는 기본적인 연산 기능을 제공하는데, 해당 연산을 사용�
   ```
 
 ## 참고 자료
-[sass guidelines](https://sass-guidelin.es/ko/)
-[heropy](https://heropy.blog/2018/01/31/sass/)
-[poiemaweb](https://poiemaweb.com/sass-css-extention)
+- [sass guidelines](https://sass-guidelin.es/ko/)
+- [heropy](https://heropy.blog/2018/01/31/sass/)
+- [poiemaweb](https://poiemaweb.com/sass-css-extention)
