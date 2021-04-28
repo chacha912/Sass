@@ -607,15 +607,15 @@ sass에는 다양한 내장함수를 제공하여 스타일규칙을 만드는�
 
 #### 2.11.1 색상 관련 내장함수
 
-- `mix(\$color1, \$color2)` : 두 개의 색을 섞습니다.
-- `lighten(\$color, \$amount)` : 백분률을 지정하여 밝게 합니다.
-- `darken(\$color, \$amount)` : 백분률을 지정하여 어둡게 합니다.
-- `saturate(\$color, \$amount)` : 백분률을 지정하여 채도를 높입니다.
-- `desaturate(\$color, \$amount)` : 백분률을 지정하여 채도를 낮춥니다.
-- `grayscale(\$color)` : 색의 채도를 제거하여 회색조로 만듭니다.
+- `mix(\$color1, \$color2)` : 두 개의 색을 섞은 색을 반환합니다.
+- `lighten(\$color, \$amount)` : 백분률을 지정하여 더 밝게 만든 색을 반환합니다.
+- `darken(\$color, \$amount)` : 백분률을 지정하여 더 어둡게 만든 색을 반환합니다.
+- `saturate(\$color, \$amount)` : 백분률을 지정하여 채도를 높인 색을 반환합니다.
+- `desaturate(\$color, \$amount)` : 백분률을 지정하여 채도를 낮춘 색을 반환합니다.
+- `grayscale(\$color)` : 색의 채도를 제거하여 회색조로 반환합니다.
 - `invert(\$color)` : 반전된 색을 반환합니다.
-- `opacify(\$color, \$amount)` / `fade-in(\$color, \$amount)` : 색상의 불투명도를 추가합니다.
-- `transparentize(\$color, \$amount)` / `fade-out(\$color, \$amount)` : 색상의 투명도를 추가합니다.
+- `opacify(\$color, \$amount)` / `fade-in(\$color, \$amount)` : 색상의 불투명도를 추가하여 반환합니다.
+- `transparentize(\$color, \$amount)` / `fade-out(\$color, \$amount)` : 색상의 투명도를 추가하여 반환합니다.
 
 #### 2.11.2 문자 관련 내장함수
 
